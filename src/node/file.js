@@ -10,6 +10,7 @@ class File {
         this.dest     = dest
     }
 
+
     get isSymbolicLink() {
         try {
             fs.lstatSync(this.filePath).isSymbolicLink()
@@ -24,20 +25,21 @@ class File {
 
 
     move(){
-        const isLink = this.isSymbolicLink
-        let file = !isLink
-            ? this.filePath
-            : fs.readlinkSync(this.filePath)
-        let dest = !isLink
-            ? `${this.dest}/${this.fileName}`
-            : this.filePath
-
         try {
+            const isLink = this.isSymbolicLink
+            let file = !isLink
+                ? this.filePath
+                : fs.readlinkSync(this.filePath)
+            let dest = !isLink
+                ? `${this.dest}/${this.fileName}`
+                : this.filePath
+
             fs.renameSync(     file, dest)
             this.createSymlink(dest, file)
             return {file: file, dest: dest}
         } catch(err) { return err }
     }
+
 
     createSymlink(file, dest) {
         try {
@@ -50,32 +52,33 @@ class File {
     get playground() {
         try {
             return {
-                file: this.file,
-                fileName: this.fileName,
-                fileDir: this.fileDir,
-                filepath: this.filePath,
+                file     : this.file,
+                fileName : this.fileName,
+                fileDir  : this.fileDir,
+                filepath : this.filePath,
+                lstat    : fs.statSync(this.filePath),
             }
         } catch(err) { return err }
     }
-
 }
 
 module.exports = File
 
 
 
-// const HOME = process.env['HOME']
+const HOME = process.env['HOME']
 
-// const FILE = `${HOME}/tmp/move-away/file`
-// const STORE = `${HOME}/tmp/move-away/STORE`
+const FILE = `${HOME}/tmp/move-away/file`
+const STORE = `${HOME}/tmp/move-away/STORE`
 
 
-// let file = new File(FILE, STORE)
-// let out = [
-//     file.playground,
-//     file.move(),
-// ]
+let file = new File(FILE, STORE)
+    // file.move()
+let out = [
+    // file.playground,
+    file.move(),
+]
 
-// out.map( item => console.log( JSON.stringify(item, null, 4) ) )
+out.map( item => console.log( JSON.stringify(item, null, 4) ) )
 
 // vim: tabstop=4 sw=4
