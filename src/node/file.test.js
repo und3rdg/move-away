@@ -8,7 +8,7 @@ describe("node/file.js", ()=>{
 
 
 
-    describe("A: Creating and checking symlinks", ()=>{
+    describe("A: Creating and checking symlinks.", ()=>{
         beforeAll(() => {
             mock({
                 "A":{
@@ -25,7 +25,7 @@ describe("node/file.js", ()=>{
         const dest = `${x}/STORE`
         const f = new File(file, dest)
 
-        test(`It should return `, () => {
+        test("It create symlink.", () => {
             expect(f.createSymlink(`${file}`, `${dest}/newSymlink`)).toEqual([`${file}`, `${dest}/newSymlink`])
             expect(fs.readlinkSync(`${dest}/newSymlink`)).toBe( `${file}` )
         })
@@ -78,7 +78,7 @@ describe("node/file.js", ()=>{
         moveTest(x, file, dest, f)
     })
 
-    describe.skip("C: Moving folder", ()=>{
+    describe("C: Moving folder", ()=>{
         beforeAll(() => {
             mock({
                 "C":{

@@ -34,7 +34,8 @@ class File {
                 ? `${this.dest}/${this.fileName}`
                 : this.filePath
 
-            fs.renameSync(     file, dest)
+            this.unlinkDest(dest)
+            fs.renameSync(file, dest)
             this.createSymlink(dest, file)
             return {file: file, dest: dest}
         } catch(err) { return err }
@@ -48,6 +49,11 @@ class File {
         } catch(err) { return err }
     }
 
+    unlinkDest(dest){
+        try{
+            fs.unlinkSync(dest)
+        } catch(err) { return err }
+    }
 
     get playground() {
         try {
@@ -64,8 +70,7 @@ class File {
 
 module.exports = File
 
-
-
+/** /
 const HOME = process.env['HOME']
 
 const FILE = `${HOME}/tmp/move-away/file`
@@ -80,5 +85,6 @@ let out = [
 ]
 
 out.map( item => console.log( JSON.stringify(item, null, 4) ) )
+/**/
 
 // vim: tabstop=4 sw=4
