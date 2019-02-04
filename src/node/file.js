@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const Config = require('./config.js')
 
 class File {
     constructor(file, dest){
@@ -8,6 +9,8 @@ class File {
         this.fileDir  = path.dirname(this.file)
         this.filePath = `${this.fileDir}/${this.fileName}`
         this.dest     = dest
+
+        this.config   = new Config(file, dest)
     }
 
 
