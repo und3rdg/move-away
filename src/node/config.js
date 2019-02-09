@@ -6,7 +6,7 @@ class Config {
         this.filePath = `${dest}/${this.file}`
         this.configInit = {
             store: this.filePath,
-            links: {}
+            links: []
         }
     }
 
@@ -19,8 +19,8 @@ class Config {
                 fs.writeFileSync(this.filePath, JSON.stringify(this.configInit))
             return 'config created'
         }
-
-
     }
+
+
 }
 module.exports = Config

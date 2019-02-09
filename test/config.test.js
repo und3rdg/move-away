@@ -24,7 +24,7 @@ describe('node/config.js', () => {
             expect(cfg.create()).to.eq('config exist')
             expect(fs.lstatSync(`${dest}/${file}`).isFile()).to.eq(true)
             const configContent = fs.readFileSync(`${dest}/${file}`, 'utf-8')
-            expect(configContent).to.eq('{"store":"STORE/.config.json","links":{}}')
+            expect(configContent).to.eq('{"store":"STORE/.config.json","links":[]}')
         })
     })
 })
