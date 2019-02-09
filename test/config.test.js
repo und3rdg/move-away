@@ -4,9 +4,6 @@ const expect = require('chai').expect
 const Config = require('./../src/node/config.js')
 const fs = require('fs')
 const mock = require('mock-fs')
-// const memfs = require('memfs')
-// const path = require('path')
-// const md5 = require('md5')
 
 describe('node/config.js', () => {
 
@@ -19,12 +16,15 @@ describe('node/config.js', () => {
         after(mock.restore)
         const file = `.config.json`
         const dest = `./STORE`
-        const cfg = new Config('dest')
+        const cfg = new Config("STORE")
 
-        it.skip('config.json should create config', () => {
+        it('config.json should create config', () => {
             expect(() => fs.lstatSync(`${dest}/${file}`).isFile()).to.throw('ENOENT')
-            cfg.createConfig()
+            expect(cfg.create()).to.eq('config created')
+            expect(cfg.create()).to.eq('config exist')
             expect(fs.lstatSync(`${dest}/${file}`).isFile()).to.eq(true)
+            const configContent = fs.readFileSync(`${dest}/${file}`, 'utf-8')
+            expect(configContent).to.eq('{"store":"STORE/.config.json","links":{}}')
         })
     })
 })
