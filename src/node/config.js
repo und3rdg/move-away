@@ -10,6 +10,7 @@ class Config {
         }
     }
 
+
     create(){
         try {
             fs.lstatSync(this.filePath).isFile() 
@@ -21,6 +22,14 @@ class Config {
         }
     }
 
+
+    read(){
+        try{
+            return JSON.parse(fs.readFileSync(this.filePath, 'utf-8'))
+        } catch(err){
+            return err
+        }
+    }
 
 }
 module.exports = Config
