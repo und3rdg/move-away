@@ -72,22 +72,3 @@ class File {
 }
 
 module.exports = File
-
-/** /
-const HOME = process.env['HOME']
-
-const FILE = `${HOME}/tmp/move-away/file`
-const STORE = `${HOME}/tmp/move-away/STORE`
-
-
-let file = new File(FILE, STORE)
-    // file.move()
-let out = [
-    // file.playground,
-    file.move(),
-]
-
-out.map( item => console.log( JSON.stringify(item, null, 4) ) )
-/**/
-
-// vim: tabstop=4 sw=4
