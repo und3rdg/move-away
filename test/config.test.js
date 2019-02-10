@@ -43,14 +43,39 @@ describe('node/config.js', () => {
         })
         after(mock.restore)
         const x = 'B'
-        const file = `.config.json`
         const dest = `${x}/STORE`
         const cfg = new Config(dest)
 
         it('config.json should create config', () => {
-            expect(cfg.create()).to.eq('config created')
+            cfg.create()
             expect(cfg.read()).to.be.an("object")
                 .that.eql({store:"B/STORE/.config.json",links:[]})
+        })
+    })
+
+
+    describe('C: write link<->file pair to json', () => {
+        before(() => {
+            mock({
+                "C": {
+                    "STORE": {}
+                }
+            })
+        })
+        after(mock.restore)
+        const x = 'C'
+        const dest = `${x}/STORE`
+        const cfg = new Config(dest)
+
+        it('config.json should create config', () => {
+            cfg.create()
+            cfg.write("C/file.txt", "C/STORE/file.txt")
+            cfg.write("C/folder/", "C/STORE/folder")
+
+            expect(cfg.read()).to.eql({store:"C/STORE/.config.json",links:[
+                {file: "C/file.txt", link: "C/STORE/file.txt"},
+                {file: "C/folder/", link: "C/STORE/folder"},
+            ]})
         })
     })
 
